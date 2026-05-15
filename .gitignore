@@ -1,0 +1,8 @@
+
+rag.env/
+.env
+__pycache__/
+*.pyc
+chroma_db/
+uploads/
+https://github.com/Curious-Nomad-22/Conversational-RAG-Assistant.git
