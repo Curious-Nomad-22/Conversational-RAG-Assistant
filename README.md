@@ -1,169 +1,65 @@
-# Conversational-RAG-Assistant
+# Conversational RAG Assistant
 
-AI-powered Enterprise Retrieval-Augmented Generation (RAG) Assistant built with FastAPI, Streamlit, LangChain, ChromaDB, HuggingFace Embeddings, and Groq LLMs.
+A Streamlit application that lets users upload PDF documents, search their contents with vector retrieval, and ask questions answered by a Groq-hosted language model.
 
 ## Live Demo
 
-🚀 Streamlit Deployment:
-
 https://conversational-rag-assistant-rohg5mhpsmwzvpnstuicpe.streamlit.app/
 
----
+## Current features
 
-## Overview
-
-Conversational-RAG-Assistant is a multi-document AI assistant designed for intelligent document understanding, semantic retrieval, conversational memory, and citation-based question answering.
-
-The system enables users to upload multiple PDF documents, generate vector embeddings, perform semantic search using dense retrieval, and interact with an LLM-powered conversational interface capable of context-aware responses.
-
-This project demonstrates practical implementation of:
-
-* Retrieval-Augmented Generation (RAG)
-* Large Language Model (LLM) Integration
-* Semantic Search
-* Vector Databases
-* Conversational AI Systems
-* Prompt Engineering
-* Embedding Pipelines
-* Context Retrieval
-* Citation-Based AI Responses
-* Multi-Document Question Answering
-* AI-Powered Knowledge Assistants
-* Generative AI Application Development
-
----
-
-## Key Features
-
-### Multi-Document Intelligence
-
-* Upload and process multiple PDF documents
-* Extract and chunk unstructured text data
-* Context-aware semantic retrieval
-
-### Conversational AI
-
-* Chat-based interaction with uploaded documents
-* Conversational memory support
-* Follow-up question handling
-
-### Retrieval-Augmented Generation (RAG)
-
-* Embedding generation using HuggingFace sentence-transformers
-* ChromaDB vector storage
-* Similarity-based semantic retrieval
-* Citation-aware response generation
-
-### LLM Integration
-
-* Groq API integration
-* Llama 3.3 70B model inference
-* Prompt-engineered context grounding
-
-### AI Infrastructure
-
-* Modular RAG pipeline architecture
-* Vector indexing pipeline
-* Chunking and retrieval optimization
-* Scalable AI application design
-
----
-
-## Tech Stack
-
-### AI / Machine Learning
-
-* LangChain
-* HuggingFace Embeddings
-* Sentence Transformers
-* Groq LLM API
-* Llama 3.3 70B
-* ChromaDB
-
-### Backend
-
-* Python
-* FastAPI
-* Streamlit
-
-### NLP / RAG Components
-
-* Semantic Search
-* Vector Embeddings
-* Text Chunking
-* Similarity Search
-* Conversational Retrieval
-* Prompt Engineering
-
----
+- Upload and index multiple PDFs in one session.
+- Extract text page by page and preserve document/page metadata.
+- Split extracted text into overlapping chunks.
+- Generate embeddings with `sentence-transformers/all-MiniLM-L6-v2` and store them in ChromaDB.
+- Retrieve relevant chunks and show source details in the interface.
+- Generate context-grounded answers using Groq's `llama-3.3-70b-versatile` model.
+- Maintain chat history for the active Streamlit session.
 
 ## Architecture
 
-PDF Upload → Text Extraction → Intelligent Chunking → Embedding Generation → Chroma Vector Store → Semantic Retrieval → LLM Response Generation → Citation-Based Answer
+PDF upload → page-level text extraction → chunking with source metadata → embedding generation → ChromaDB → semantic retrieval → Groq LLM answer with source IDs.
 
----
+## Tech stack
 
-## Skills Demonstrated
+- Python and Streamlit
+- LangChain text splitters and Chroma integration
+- ChromaDB
+- Hugging Face Sentence Transformers
+- pypdf
+- Groq API
 
-* Generative AI Engineering
-* Enterprise RAG Development
-* AI System Design
-* NLP Pipeline Development
-* Vector Database Integration
-* LLM Application Engineering
-* Semantic Retrieval Systems
-* Full-Stack AI Application Development
-* Prompt Engineering
-* Context-Aware AI Systems
-* Production-Oriented AI Deployment
+## Run locally
 
----
+1. Create and activate a virtual environment.
+2. Install dependencies:
 
-## Ideal Use Cases
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-* Enterprise Knowledge Assistants
-* Internal Document Search Systems
-* AI Research Assistants
-* Resume Intelligence Systems
-* Multi-PDF QA Platforms
-* AI Customer Support Assistants
-* Conversational Knowledge Retrieval
+3. Create a `.env` file in the repository root:
 
----
+   ```text
+   GROQ_API_KEY=your_groq_api_key
+   ```
 
-## Future Improvements
+4. Start the application from the repository root:
 
-* Hybrid Search (BM25 + Dense Retrieval)
-* Reranking Pipelines
-* Multi-Agent AI Workflow
-* Authentication and User Management
-* Persistent Chat Memory
-* Cloud Vector Databases
-* Docker Deployment
-* Kubernetes Scaling
-* LangSmith Observability
-* Advanced RAG Evaluation
+   ```bash
+   streamlit run app/main.py
+   ```
 
----
+You can also add `GROQ_API_KEY` through your Streamlit deployment's secrets configuration.
 
-## Why This Project Matters
+## Notes and limitations
 
-This project focuses on real-world Generative AI application engineering by combining LLMs, vector databases, semantic retrieval, and conversational AI into a deployable production-style system.
+- Scanned PDFs that contain images rather than selectable text need OCR, which is not included.
+- Chat history is held in Streamlit session state and is not durable across sessions.
+- The local Chroma directory is not a managed cloud database. Deployment persistence depends on the hosting environment.
+- Similarity scores are surfaced for inspection; they are distance values, not calibrated confidence probabilities.
+- The application has not been security-audited or load-tested for production use.
 
-It reflects practical skills required for:
+## Planned improvements
 
-* Generative AI Engineer Roles
-* Machine Learning Engineer Roles
-* Applied AI Roles
-* NLP Engineer Roles
-* LLM Application Developer Roles
-* Enterprise AI Assistant Development
-* AI Infrastructure Engineering
-
----
-
-## Author
-
-Sangeetha A
-
-Machine Learning Developer | Generative AI Enthusiast | RAG Systems Builder
+Hybrid retrieval, reranking, automated RAG evaluation, persistent multi-user history, authentication, and deeper request/response observability.

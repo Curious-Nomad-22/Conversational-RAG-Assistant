@@ -1,12 +1,24 @@
 from pypdf import PdfReader
 
 
-def extract_text_from_pdf(pdf_path):
+def extract_pages_from_pdf(pdf_path):
+    """Extract text page by page so retrieval can cite page numbers."""
     reader = PdfReader(pdf_path)
+    pages = []
 
-    text = ""
+    for page_number, page in enumerate(reader.pages, start=1):
+        extracted = page.extract_text() or ""
+        pages.append({
+            "page_number": page_number,
+            "text": extracted,
+        })
 
-    for page in reader.pages:
-        text += page.extract_text()
+    return pages
 
-    return text
+
+def extract_text_from_pdf(pdf_path):
+    """Backward-compatible helper that returns the whole document as text."""
+    return "\n\n".join(
+        page["text"] for page in extract_pages_from_pdf(pdf_path)
+        if page["text"].strip()
+    )
