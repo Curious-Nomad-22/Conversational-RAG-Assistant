@@ -1,7 +1,11 @@
-
-rag.env/
 .env
+*.env
 __pycache__/
-*.pyc
+*.py[cod]
+.venv/
+venv/
+app/chroma_db/
+app/uploads/
 chroma_db/
 uploads/
+.streamlit/secrets.toml

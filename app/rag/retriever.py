@@ -2,35 +2,27 @@ from langchain_chroma import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 
-def load_vector_store():
+def load_vector_store(collection_name=None):
+    """Load a known Chroma collection. A collection name is required."""
+    if not collection_name:
+        raise ValueError("A Chroma collection name is required to load an index.")
 
     embedding_model = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
-
-    vector_store = Chroma(
+    return Chroma(
+        collection_name=collection_name,
         persist_directory="app/chroma_db",
-        embedding_function=embedding_model
+        embedding_function=embedding_model,
     )
 
-    return vector_store
 
+def retrieve_documents(query, vector_store, k=6):
+    """Retrieve ranked passages from the active vector store."""
+    if vector_store is None:
+        raise ValueError("No vector store is available. Upload a PDF first.")
+    if not query or not query.strip():
+        return []
 
-def retrieve_documents(query):
-
-    vector_store = load_vector_store()
-
-    results = vector_store.similarity_search_with_score(
-        query,
-        k=8
-    )
-
-    filtered_results = []
-
-    for doc, score in results:
-
-        print("SCORE:", score)
-
-        filtered_results.append(doc)
-
-    return filtered_results
+    results = vector_store.similarity_search_with_score(query.strip(), k=k)
+    return [(doc, float(score)) for doc, score in results]
